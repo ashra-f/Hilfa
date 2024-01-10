@@ -1,4 +1,7 @@
 ---
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+
 interface Props {
 	title: string;
 }
@@ -16,12 +19,9 @@ const { title } = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body>
-		<header />
+		<Header />
 		<slot />
-		<footer> 
-			<p>contact us </p>
-			<p>about us </p>
-			<a href="https://www.instagram.com/hilfastudios/">Hilfa Instagram</a>
-		</footer>
+		<Footer> 
+
 	</body>
 </html>
