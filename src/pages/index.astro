@@ -1,20 +1,47 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ProductCard from '../components/ProductCard.astro';
+
+// Fetch products from Hygraph (our CMS)
+const query = {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    query: `
+      {
+        products {
+          name
+          price
+          quantity
+          slug
+          images {
+            url
+          }
+        }
+      }`,
+  }),
+};
+
+const response = await fetch(import.meta.env.HYGRAPH_ENDPOINT, query);
+const json = await response.json();
+const products = json.data.products;
 ---
 
 <Layout title="Hilfa">
 	<main>
 		<h1>Welcome to Hilfa</h1>
 		<ul role="list" class="link-card-grid">
-      <!-- All these will be grabbed from the CMS instead -->
-			<ProductCard
-        image="https://shop.thrashermagazine.com/cdn/shop/files/JAKEDISH-NAVY-T-SHIRT-1.jpg?v=1698451514&width=1200"
-        title="Product 1"
-        body="T-Shirt"
-        price='30.95'
-        href="./"
-			/>
+      {
+      products.map((product: any) => (
+        <ProductCard
+          image={product.images[0].url}
+          title={product.name}
+          body="T-Shirt"
+          price={product.price}
+          href="./"
+        />
+      ))
+    }
 		</ul>
 	</main>
 </Layout>
