@@ -1,0 +1,91 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+// Note: the first two functions are required for Astro to generate the static site
+// Function to fetch all product slugs
+export async function getAllProductSlugs() {
+  const query = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      query: `
+        {
+          products {
+            slug
+          }
+        }`,
+    }),
+  };
+
+  const response = await fetch(import.meta.env.HYGRAPH_ENDPOINT, query);
+  const json = await response.json();
+  return json.data.products.map((product: { slug: string }) => product.slug);
+}
+
+// getStaticPaths function for static generation
+export async function getStaticPaths() {
+  const slugs = await getAllProductSlugs();
+  return slugs.map((slug: string) => {
+    return { params: { slug } };
+  });
+}
+
+// Function to fetch product data based on slug
+async function getProduct(slug: string) {
+  const query = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      query: `
+        {
+          product(where: { slug: "${slug}" }) {
+            name
+            price
+            description {
+              text
+            }
+            images {
+              url
+            }
+            sizes
+          }
+        }`,
+    }),
+  };
+
+  const response = await fetch(import.meta.env.HYGRAPH_ENDPOINT, query);
+  const json = await response.json();
+  return json.data.product;
+}
+
+// Get the slug from the URL
+const { slug } = Astro.params;
+
+// Fetch product data
+const product = await getProduct(slug as string);
+const description = product.description.text || "";
+---
+
+<Layout title={product.name}>
+  <main>
+    <h1>{product.name}</h1>
+    <div class="product-images">
+      <!-- Display all product images -->
+      {product.images.map((image: { url: string }) => (
+        <img src={image.url} alt={product.name} />
+      ))}
+    </div>
+    <p>{description}</p>
+    <p>Price: ${product.price}</p>
+    <div class="product-sizes">
+      <!-- Display available sizes -->
+      {product.sizes.map((size: string) => (
+        <div>
+          <input type="radio" id={`size-${size}`} name="size" value={size} />
+          <label for={`size-${size}`}>{size}</label>
+        </div>
+      ))}
+    </div>
+    <button type="button">Buy</button>
+  </main>
+</Layout>

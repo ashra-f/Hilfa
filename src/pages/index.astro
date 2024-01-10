@@ -38,7 +38,7 @@ const products = json.data.products;
           title={product.name}
           body="T-Shirt"
           price={product.price}
-          href="./"
+          href={`/products/${product.slug}`}
         />
       ))
     }
