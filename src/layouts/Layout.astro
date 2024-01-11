@@ -1,6 +1,6 @@
 ---
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
+import Footer from '../components/Footer.tsx';
+import Header from '../components/Header.tsx';
 
 interface Props {
 	title: string;
@@ -21,7 +21,6 @@ const { title } = Astro.props;
 	<body>
 		<Header />
 		<slot />
-		<Footer> 
-
+		<Footer /> 
 	</body>
 </html>
