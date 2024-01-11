@@ -11,13 +11,21 @@ interface Props {
 
 const ProductCard: Component<Props> = (props) => {
   return (
-    <li class="link-card">
-      <a href={props.href}>
-        <img src={props.image} alt={props.title} height="200" width="200" />
-        <h4>{props.title}</h4>
-        <p>{props.body}</p>
-        <p>${props.price}</p>
+    <li class="max-w-xs mx-auto bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl">
+      <a href={props.href} class="block relative">
+        <img
+          src={props.image}
+          alt={props.title}
+          class="object-cover object-top w-full h-64"
+        />
       </a>
+      <div class="mt-4 p-4">
+        <a href={props.href} class="text-gray-900 font-semibold text-lg">
+          {props.title}
+        </a>
+        <p class="mt-2 text-gray-600 text-sm">{props.body}</p>
+        <p class="mt-2 text-gray-900 font-bold text-xl">${props.price}</p>
+      </div>
     </li>
   )
 }
