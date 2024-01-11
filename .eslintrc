@@ -1,0 +1,62 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "project": "./tsconfig.json"
+  },
+  "settings": {
+    "solid": {
+      "version": "latest"
+    },
+    "react": {
+      "pragma": "h"
+    }
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:solid/typescript",
+    "plugin:astro/recommended"
+  ],
+  "plugins": [
+    "solid"
+  ],
+  "rules": {
+    // TypeScript and JSX rules
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_"
+      }
+    ],
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    // SolidJS specific rules
+    "solid/jsx-no-undef": "error",
+    "solid/no-destructure": "error",
+    // General JavaScript/TypeScript rules
+    "no-console": "warn",
+    "eqeqeq": [
+      "error",
+      "always"
+    ]
+  },
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "overrides": [
+    {
+      "files": [
+        "*.astro"
+      ],
+      "parser": "astro-eslint-parser",
+      "parserOptions": {
+        "parser": "@typescript-eslint/parser"
+      }
+    }
+  ]
+}
