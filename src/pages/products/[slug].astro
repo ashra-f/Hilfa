@@ -42,12 +42,17 @@ const errors = { err: "" };
 if (Astro.request.method === "POST") {
   const data = await Astro.request.formData();
   const size = data.get("size")?.toString();
+  const productName = product.name;
 
   if (!size) {
     console.log("No size selected");
     errors.err = "Please select a size";
   } else {
-    return Astro.redirect(`/checkout?slug=${slug}&size=${size}`);
+    if (productName === "Hilfa Original Shirt") {
+      return Astro.redirect("https://buy.stripe.com/test_8wM3fL0Ma8aaaEU9AC")
+    } else if (productName === "Hoodie 2.0") {
+      return Astro.redirect("https://buy.stripe.com/test_00gdUp9iGgGG7sIdQR")
+    }
   }
 }
 ---
