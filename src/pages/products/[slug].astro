@@ -1,35 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 
-// Note: the first two functions are required for Astro to generate the static site
-// Function to fetch all product slugs
-export async function getAllProductSlugs() {
-  const query = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      query: `
-        {
-          products {
-            slug
-          }
-        }`,
-    }),
-  };
-
-  const response = await fetch(import.meta.env.HYGRAPH_ENDPOINT, query);
-  const json = await response.json();
-  return json.data.products.map((product: { slug: string }) => product.slug);
-}
-
-// getStaticPaths function for static generation
-export async function getStaticPaths() {
-  const slugs = await getAllProductSlugs();
-  return slugs.map((slug: string) => {
-    return { params: { slug } };
-  });
-}
-
 // Function to fetch product data based on slug
 async function getProduct(slug: string) {
   const query = {
@@ -64,7 +35,7 @@ const { slug } = Astro.params;
 
 // Fetch product data
 const product = await getProduct(slug as string);
-const description = product.description.text || "";
+const description = product.description?.text || "";
 
 const errors = { err: "" };
 
@@ -76,7 +47,7 @@ if (Astro.request.method === "POST") {
     console.log("No size selected");
     errors.err = "Please select a size";
   } else {
-    return Astro.redirect(`/checkout?product=${product.id}&size=${size}`);
+    return Astro.redirect(`/checkout?slug=${slug}&size=${size}`);
   }
 }
 ---

@@ -1,9 +1,74 @@
 ---
-import Layout from "../layouts/Layout.astro"
+import Stripe from 'stripe';
+
+const size = Astro.url.searchParams.get("size");
+const slug = Astro.url.searchParams.get("slug");
+
+if (!size || !slug) {
+  return Astro.redirect("/?error=missing+size+or+product");
+}
+
+async function getProduct(slug: string) {
+  const query = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      query: `
+        {
+          product(where: { slug: "${slug}" }) {
+            name
+            price
+            description {
+              text
+            }
+            images {
+              url
+            }
+            sizes
+          }
+        }`,
+    }),
+  };
+
+  const response = await fetch(import.meta.env.HYGRAPH_ENDPOINT, query);
+  const json = await response.json();
+  return json.data.product;
+}
+
+const product = await getProduct(slug as string);
+const price = Math.round(Number(product.price) * 100); // Convert to cents and round off
+
+const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY);
+const YOUR_DOMAIN = import.meta.env.SITE_URL;
+
+const productNameWithSize = `${product.name} - Size: ${size}`;
 
 // Stripe checkout
----
+const session = await stripe.checkout.sessions.create({
+  line_items: [{
+    price_data: {
+      currency: 'usd',
+      product_data: {
+        name: productNameWithSize,
+        images: product.images.map((image: { url: string; }) => image.url),
+        metadata: {
+          size
+        },
+      },
+      unit_amount: price,
+    },
+    quantity: 1,
+  }],
+  metadata: {
+    size
+  },
+  shipping_address_collection: {
+    allowed_countries: ['US'],
+  },
+  mode: 'payment',
+  success_url: `${YOUR_DOMAIN}/thanks?session_id={CHECKOUT_SESSION_ID}`,
+  cancel_url: `${YOUR_DOMAIN}/`,
+});
 
-<Layout title="Checkout">
-  <!-- Product image, short description -->
-</Layout>
+return Astro.redirect(session.url);
+---
