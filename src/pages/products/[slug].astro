@@ -67,27 +67,83 @@ const description = product.description.text || "";
 ---
 
 <Layout title={product.name}>
-  <main>
-    <h1>{product.name}</h1>
-    <div class="product-images">
-      <!-- Display all product images -->
-      {product.images.map((image: { url: string }) => (
-        <img src={image.url} alt={product.name} />
-      ))}
+  <main class="flex">
+    <!-- Left Column for Images -->
+    <div class="w-1/2 flex flex-col items-center">
+      <div class="mb-4">
+        <!-- Display the first image as the large image initially -->
+        <img 
+          id="mainImage"
+          src={product.images[0]?.url || 'placeholder.jpg'} 
+          alt={product.name}
+          class="w-full object-cover"
+        />
+      </div>
+      <div class="flex">
+        <!-- Display all product images as smaller images -->
+        {product.images.map((image: { url: string | null | undefined; }) => (
+          <img 
+            src={image.url} 
+            alt={product.name} 
+            class="w-24 h-24 object-cover mr-2 smaller-image cursor-pointer hover:border-blue-500 border-2 rounded-md"
+            data-image-url={image.url}
+          />
+        ))}
+      </div>
     </div>
-    <p>{description}</p>
-    <p>Price: ${product.price}</p>
-    <div class="product-sizes">
-      <!-- Display available sizes -->
-      {product.sizes.map((size: string) => (
-        <div>
-          <input type="radio" id={`size-${size}`} name="size" value={size} />
-          <label for={`size-${size}`}>{size}</label>
+
+    <!-- Right Column for Product Details -->
+    <div class="w-1/2 flex flex-col p-4">
+      <h1 class="text-2xl font-bold mb-3">{product.name}</h1>
+      <p class="mb-3">{description}</p>
+      <p class="font-semibold mb-3">${product.price}</p>
+
+      <div class="flex flex-wrap mb-4">
+        <!-- Select Size Label -->
+        <div class="w-full mb-2">
+          <span class="text-md font-light">Select Size</span>
         </div>
-      ))}
+
+        <!-- Display available sizes with curved rectangular radio buttons -->
+        {product.sizes.map((size: string) => (
+          <div class="mr-2 mb-2">
+            <input 
+              type="radio" 
+              id={`size-${size}`} 
+              name="size" 
+              value={size} 
+              class="hidden peer" 
+            />
+            <label 
+              for={`size-${size}`} 
+              class="cursor-pointer bg-white border border-gray-300 rounded-md px-4 py-2 text-md font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 peer-checked:bg-blue-500 peer-checked:text-white"
+            >
+              {size}
+            </label>
+          </div>
+        ))}
+      </div>
+      <a href="https://buy.stripe.com/test_fZecQlgL8gGGcN27ss" class="inline-block">
+        <button type="button" class="bg-black hover:bg-gray-800 text-white font-bold py-2 px-8 rounded-full w-full">
+          Buy
+        </button>
+      </a>
     </div>
-    <a href=" https://buy.stripe.com/test_fZecQlgL8gGGcN27ss">
-    <button type="button">Buy</button>
-    <a>
   </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const smallerImages = document.querySelectorAll('img.smaller-image');
+
+      smallerImages.forEach((imageElement) => {
+        imageElement.addEventListener('click', () => {
+          const mainImage = document.getElementById('mainImage') as HTMLImageElement;
+          const imageUrl = (imageElement as HTMLImageElement).dataset.imageUrl;
+          if (mainImage && imageUrl) {
+            mainImage.src = imageUrl;
+          }
+        });
+      });
+    });
+  </script>
 </Layout>
