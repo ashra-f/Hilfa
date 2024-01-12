@@ -29,8 +29,8 @@ const products = json.data.products;
 
 <Layout title="Hilfa">
 	<main>
-	
-		<ul role="list" class="link-card-grid">
+	<!-- you can make the gap bigger by adding to the space-x-## -->
+		<ul role="list" class="flex justify-center space-x-20" >
       {
       products.map((product: any) => (
         <ProductCard
