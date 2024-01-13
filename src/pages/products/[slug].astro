@@ -37,13 +37,11 @@ const { slug } = Astro.params;
 // Fetch product data
 const product = await getProduct(slug as string);
 const description = product.description?.text || "";
-
 const errors = { err: "" };
 
 if (Astro.request.method === "POST") {
   const data = await Astro.request.formData();
   const size = data.get("size")?.toString();
-  const productName = product.name;
 
   if (!size) {
     console.log("No size selected");
@@ -96,8 +94,7 @@ if (Astro.request.method === "POST") {
         <p class="font-semibold mb-3">${product.price}</p>
       </div>
       <p class="mb-3">{description}</p>
-
-
+      
       <form method="POST">
         <div class="flex flex-wrap mb-4">
           <!-- Select Size Label -->
@@ -106,23 +103,27 @@ if (Astro.request.method === "POST") {
           </div>
 
           <!-- Display available sizes with curved rectangular radio buttons -->
-          {product.sizes.map((size: string) => (
-            <div class="mr-2 mb-2">
-              <input 
-                type="radio" 
-                id={`size-${size}`} 
-                name="size" 
-                value={size} 
-                class="hidden peer" 
-              />
-              <label 
-                for={`size-${size}`} 
-                class="cursor-pointer bg-white border border-gray-300 rounded-md px-4 py-2 text-md font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 peer-checked:bg-blue-500 peer-checked:text-white"
-              >
-                {size}
-              </label>
-            </div>
-          ))}
+          {['Small', 'Medium', 'Large', 'XL'].map((size) => {
+            const isAvailable = product.sizes.includes(size);
+            return (
+              <div class="mr-2 mb-2">
+                <input 
+                  type="radio" 
+                  id={`size-${size}`} 
+                  name="size" 
+                  value={size} 
+                  class="hidden peer"
+                  disabled={!isAvailable}
+                />
+                <label 
+                  for={`size-${size}`} 
+                  class={`cursor-pointer bg-white border border-gray-300 rounded-md px-4 py-2 text-md font-medium ${isAvailable ? 'text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 peer-checked:bg-blue-500 peer-checked:text-white' : 'text-gray-300 cursor-not-allowed'}`}
+                >
+                  {size}
+                </label>
+              </div>
+            );
+          })}
         </div>
 
         <!-- Buy Button as Submit -->
