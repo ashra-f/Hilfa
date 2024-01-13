@@ -28,20 +28,19 @@ const products = json.data.products;
 ---
 
 <Layout title="Hilfa">
-	<main>
-	<!-- you can make the gap bigger by adding to the space-x-## -->
-		<ul role="list" class="flex justify-center space-x-20" >
-      {
-      products.map((product: any) => (
-        <ProductCard
-          image={product.images[0].url}
-          title={product.name}
-          body="T-Shirt"
-          price={product.price}
-          href={`/products/${product.slug}`}
-        />
-      ))
-    }
-		</ul>
-	</main>
+  <main class="flex flex-col justify-between">
+    <div class="flex-grow">
+      <ul role="list" class="flex flex-col space-y-4 lg:flex-row lg:space-y-0 lg:space-x-20 lg:justify-center lg:items-stretch p-4">
+        {products.map((product: any) => (
+          <ProductCard
+            image={product.images[0].url}
+            title={product.name}
+            body="T-Shirt"
+            price={product.price}
+            href={`/products/${product.slug}`}
+          />
+        ))}
+      </ul>
+    </div>
+  </main>
 </Layout>

@@ -13,11 +13,11 @@ const ProductCard: Component<Props> = (props) => {
   return (
     <a href={props.href} class="block">
       <li class="max-w-xs mx-auto bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl">
-        <div class="block relative">
+        <div class="relative flex justify-center items-center">
           <img
             src={props.image}
             alt={props.title}
-            class="object-cover object-top w-full h-64"
+            class="object-cover object-center w-64 h-64"
           />
         </div>
         <div class="mt-4 p-4">

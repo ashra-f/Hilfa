@@ -4,9 +4,9 @@ import type { Component } from "solid-js"
 const Footer: Component = () => {
   return (
     <footer class="bg-black text-white py-8">
-      <div class="max-w-7xl mx-auto px-4 flex flex-wrap justify-between items-center">
-        <div class="flex space-x-4">
-          {/* Navigation Links */}
+      <div class="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0">
+        {/* Navigation Links */}
+        <div class="flex space-x-4 mb-4 lg:mb-0">
           <a href="/" class="hover:text-gray-400">
             Home
           </a>
@@ -17,17 +17,19 @@ const Footer: Component = () => {
             Contact
           </a>
         </div>
+
         {/* Centered Logo or Text */}
-        <div class="hidden md:block">
+        <div class="order-3 lg:order-2 text-center mb-4 lg:mb-0">
           <span class="font-ballet text-3xl">hilfastudios</span>
         </div>
-        <div class="flex space-x-4">
-          {/* Social Media Icons */}
+
+        {/* Social Media Icons */}
+        <div class="flex space-x-4 order-2 lg:order-3">
           <For each={socialMediaLinks}>
             {(social) => (
               <a
                 href={social.link}
-                class="hover:text-gray-400"
+                class="hover:text-gray-400 mb-4 lg:mb-0"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -42,10 +44,6 @@ const Footer: Component = () => {
             )}
           </For>
         </div>
-      </div>
-      {/* Responsive Centered Logo or Text for smaller screens */}
-      <div class="md:hidden text-center py-4">
-        <span class="font-ballet text-3xl">hilfastudios</span>
       </div>
     </footer>
   )
