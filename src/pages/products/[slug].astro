@@ -59,44 +59,50 @@ if (Astro.request.method === "POST") {
 ---
 
 <Layout title={product.name}>
-  <main class="flex">
-    <!-- Left Container for Images -->
-    <div class="flex">  
-      <!-- Left Column for Smaller Images -->
-      <div class="flex flex-col mr-4">
-        <!-- Display all product images as smaller images -->
-        {product.images.map((image: { url: string | null | undefined; }) => (
-          <img 
-            src={image.url} 
-            alt={product.name} 
-            class="w-24 h-24 object-cover mb-2 smaller-image cursor-pointer hover:border-blue-500 border-2 rounded-md"
-            data-image-url={image.url}
-          />
-        ))}
-      </div>
+  <main class="flex flex-col md:flex-row">
+    <!-- Product Details for Smaller Screens (Hidden on Larger Screens) -->
+    <div class="md:hidden w-full p-4">
+      <h1 class="text-2xl font-bold mb-3">{product.name}</h1>
+      <p class="text-md font-light mb-3">{product.type}</p>
+      <p class="font-semibold mb-3">${product.price}</p>
+    </div>
 
-      <!-- Right Column for Large Image -->
-      <div class="w-[30rem] h-[30rem] flex-grow">
-        <!-- Main Large Image with Object Contain -->
+    <!-- Images Container for All Screens -->
+    <div class="w-full md:w-1/2 md:flex md:flex-row-reverse md:align-top">
+      <!-- Main Image -->
+      <div class="w-full">
         <img 
           id="mainImage"
           src={product.images[0]?.url} 
           alt={product.name}
-          class="w-full h-full object-contain"
+          class="w-full h-full md:h-[480px] object-contain mb-2"
         />
+      </div>
+      <!-- Smaller Images Row for Smaller Screens, Column for Larger Screens -->
+      <div class="flex md:flex-col justify-center md:mr-4">
+        {product.images.map((image: { url: string | null | undefined; }, index: number) => (
+          <img 
+            src={image.url} 
+            alt={product.name} 
+            class="w-24 h-24 object-cover mr-2 md:mr-0 md:mb-2 smaller-image cursor-pointer hover:border-blue-500 border-2 rounded-md"
+            data-image-url={image.url}
+          />
+        ))}
       </div>
     </div>
 
-    <!-- Right Container for Product Details -->
-    <div class="w-1/2 flex flex-col p-4">
-      <h1 class="text-2xl font-bold mb-3">{product.name}</h1>
-      <p class="text-md font-light mb-3">{product.type}</p>
+    <!-- Everything Else Container for All Screens -->
+    <div class="w-full md:w-1/2 p-4 flex flex-col">
+      <!-- Product Details for Larger Screens (Hidden on Smaller Screens) -->
+      <div class="hidden md:block">
+        <h1 class="text-2xl font-bold mb-3">{product.name}</h1>
+        <p class="text-md font-light mb-3">{product.type}</p>
+        <p class="font-semibold mb-3">${product.price}</p>
+      </div>
       <p class="mb-3">{description}</p>
-      <p class="font-semibold mb-3">${product.price}</p>
+
 
       <form method="POST">
-        <input type="hidden" name="product" value={product.id} />
-
         <div class="flex flex-wrap mb-4">
           <!-- Select Size Label -->
           <div class="w-full mb-2">
