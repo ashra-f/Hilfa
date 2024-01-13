@@ -13,6 +13,7 @@ async function getProduct(slug: string) {
             id
             name
             price
+            type
             description {
               text
             }
@@ -59,33 +60,37 @@ if (Astro.request.method === "POST") {
 
 <Layout title={product.name}>
   <main class="flex">
-    <!-- Left Column for Images -->
-    <div class="w-1/2 flex flex-col items-center">
-      <div class="mb-4">
-        <!-- Display the first image as the large image initially -->
-        <img 
-          id="mainImage"
-          src={product.images[0]?.url || 'placeholder.jpg'} 
-          alt={product.name}
-          class="w-full object-cover"
-        />
-      </div>
-      <div class="flex">
+    <!-- Left Container for Images -->
+    <div class="flex">  
+      <!-- Left Column for Smaller Images -->
+      <div class="flex flex-col mr-4">
         <!-- Display all product images as smaller images -->
         {product.images.map((image: { url: string | null | undefined; }) => (
           <img 
             src={image.url} 
             alt={product.name} 
-            class="w-24 h-24 object-cover mr-2 smaller-image cursor-pointer hover:border-blue-500 border-2 rounded-md"
+            class="w-24 h-24 object-cover mb-2 smaller-image cursor-pointer hover:border-blue-500 border-2 rounded-md"
             data-image-url={image.url}
           />
         ))}
       </div>
+
+      <!-- Right Column for Large Image -->
+      <div class="w-[30rem] h-[30rem] flex-grow">
+        <!-- Main Large Image with Object Contain -->
+        <img 
+          id="mainImage"
+          src={product.images[0]?.url} 
+          alt={product.name}
+          class="w-full h-full object-contain"
+        />
+      </div>
     </div>
 
-    <!-- Right Column for Product Details -->
+    <!-- Right Container for Product Details -->
     <div class="w-1/2 flex flex-col p-4">
       <h1 class="text-2xl font-bold mb-3">{product.name}</h1>
+      <p class="text-md font-light mb-3">{product.type}</p>
       <p class="mb-3">{description}</p>
       <p class="font-semibold mb-3">${product.price}</p>
 
