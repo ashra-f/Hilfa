@@ -3,43 +3,37 @@ import type { Component } from "solid-js"
 
 const Footer: Component = () => {
   return (
-    <footer class="bg-gray-900 text-white p-8">
-      <div class="max-w-6xl mx-auto flex flex-wrap justify-between items-center">
-        <div class="flex flex-col md:flex-row items-center md:items-start">
-          <a
-            href="/"
-            class="hover:text-gray-300 text-white no-underline mx-3 my-2"
-          >
+    <footer class="bg-black text-white py-8">
+      <div class="max-w-7xl mx-auto px-4 flex flex-wrap justify-between items-center">
+        <div class="flex space-x-4">
+          {/* Navigation Links */}
+          <a href="/" class="hover:text-gray-400">
             Home
           </a>
-          <a
-            href="/about"
-            class="hover:text-gray-300 text-white no-underline mx-3 my-2"
-          >
+          <a href="/about" class="hover:text-gray-400">
             About
           </a>
-          <a
-            href="/contact"
-            class="hover:text-gray-300 text-white no-underline mx-3 my-2"
-          >
+          <a href="/contact" class="hover:text-gray-400">
             Contact
           </a>
         </div>
-        <div class="flex items-center mt-4 md:mt-0">
+        {/* Centered Logo or Text */}
+        <div class="hidden md:block">
+          <span class="font-ballet text-3xl">hilfastudios</span>
+        </div>
+        <div class="flex space-x-4">
           {/* Social Media Icons */}
           <For each={socialMediaLinks}>
             {(social) => (
               <a
                 href={social.link}
-                class="text-white hover:text-gray-300 mx-3"
+                class="hover:text-gray-400"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <svg
-                  class="fill-current"
+                  class="fill-current h-6 w-6"
                   xmlns="http://www.w3.org/2000/svg"
-                  height="24"
-                  width="24"
                   viewBox={social.viewBox}
                 >
                   <path d={social.svgPath} />
@@ -49,8 +43,9 @@ const Footer: Component = () => {
           </For>
         </div>
       </div>
-      <div class="text-center text-sm mt-4">
-        <p>© 2024 Hilfa Studios. All rights reserved.</p>
+      {/* Responsive Centered Logo or Text for smaller screens */}
+      <div class="md:hidden text-center py-4">
+        <span class="font-ballet text-3xl">hilfastudios</span>
       </div>
     </footer>
   )
