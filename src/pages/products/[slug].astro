@@ -49,11 +49,7 @@ if (Astro.request.method === "POST") {
     console.log("No size selected");
     errors.err = "Please select a size";
   } else {
-    if (productName === "Hilfa Original Shirt") {
-      return Astro.redirect("https://buy.stripe.com/test_8wM3fL0Ma8aaaEU9AC")
-    } else if (productName === "Hoodie 2.0") {
-      return Astro.redirect("https://buy.stripe.com/test_00gdUp9iGgGG7sIdQR")
-    }
+    return Astro.redirect(`/checkout?slug=${slug}&size=${size}`);
   }
 }
 ---
