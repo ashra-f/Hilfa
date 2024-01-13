@@ -39,8 +39,9 @@ const product = await getProduct(slug as string);
 const price = Math.round(Number(product.price) * 100); // Convert to cents and round off
 
 const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY);
-const YOUR_DOMAIN = import.meta.env.SITE_URL;
-
+const YOUR_DOMAIN = 
+  import.meta.env.ENV === 'development' 
+    ? "http://localhost:4321" : "https://astro-commerce.vercel.app";
 
 // Stripe checkout
 const session = await stripe.checkout.sessions.create({
