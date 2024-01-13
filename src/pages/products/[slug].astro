@@ -106,7 +106,7 @@ if (Astro.request.method === "POST") {
           {['Small', 'Medium', 'Large', 'XL'].map((size) => {
             const isAvailable = product.sizes.includes(size);
             return (
-              <div class="mr-2 mb-2">
+              <div class="mr-2 mb-6 md:mb-2">
                 <input 
                   type="radio" 
                   id={`size-${size}`} 
@@ -117,7 +117,7 @@ if (Astro.request.method === "POST") {
                 />
                 <label 
                   for={`size-${size}`} 
-                  class={`cursor-pointer bg-white border border-gray-300 rounded-md px-4 py-2 text-md font-medium ${isAvailable ? 'text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 peer-checked:bg-blue-500 peer-checked:text-white' : 'text-gray-300 cursor-not-allowed'}`}
+                  class={`cursor-pointer bg-white border border-gray-300 rounded-md px-4 py-2 text-md font-medium ${isAvailable ? 'text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black peer-checked:bg-black peer-checked:text-white' : 'text-gray-300 cursor-not-allowed'}`}
                 >
                   {size}
                 </label>

@@ -5,8 +5,13 @@ const Footer: Component = () => {
   return (
     <footer class="bg-black text-white py-8">
       <div class="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0">
+        {/* Centered Logo or Text */}
+        <div class="order-1 text-center lg:order-2">
+          <span class="font-ballet text-3xl">hilfastudios</span>
+        </div>
+
         {/* Navigation Links */}
-        <div class="flex space-x-4 mb-4 lg:mb-0">
+        <div class="order-2 flex space-x-4 lg:order-1">
           <a href="/" class="hover:text-gray-400">
             Home
           </a>
@@ -18,18 +23,13 @@ const Footer: Component = () => {
           </a>
         </div>
 
-        {/* Centered Logo or Text */}
-        <div class="order-3 lg:order-2 text-center mb-4 lg:mb-0">
-          <span class="font-ballet text-3xl">hilfastudios</span>
-        </div>
-
         {/* Social Media Icons */}
-        <div class="flex space-x-4 order-2 lg:order-3">
+        <div class="order-3 flex space-x-4 lg:order-3">
           <For each={socialMediaLinks}>
             {(social) => (
               <a
                 href={social.link}
-                class="hover:text-gray-400 mb-4 lg:mb-0"
+                class="hover:text-gray-400"
                 target="_blank"
                 rel="noopener noreferrer"
               >
