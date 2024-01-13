@@ -41,7 +41,7 @@ const price = Math.round(Number(product.price) * 100); // Convert to cents and r
 const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY);
 const YOUR_DOMAIN = 
   import.meta.env.ENV === 'development' 
-    ? "http://localhost:4321" : "https://hilfa-8faznd8ux-ashs-projects-7f2884d9.vercel.app/";
+    ? "http://localhost:4321" : "https://hilfa.vercel.app/";
 
 // Stripe checkout
 const session = await stripe.checkout.sessions.create({
