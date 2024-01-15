@@ -18,7 +18,15 @@ async function getProduct(slug: string) {
               text
             }
             images {
-              url
+              url(
+                transformation: {
+                  document: {
+                    output: {
+                      format: webp
+                    }
+                  }
+                }
+              )
             }
             sizes
           }

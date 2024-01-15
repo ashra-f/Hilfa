@@ -15,7 +15,15 @@ const query = {
           quantity
           slug
           images {
-            url
+            url(
+              transformation: {
+                document: {
+                  output: {
+                    format: webp
+                  }
+                }
+              }
+            )
           }
         }
       }`,
