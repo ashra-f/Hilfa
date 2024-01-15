@@ -11,7 +11,7 @@ interface Props {
 
 const ProductCard: Component<Props> = (props) => {
   return (
-    <li class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl mx-0">
+    <li class="inline-flex flex-col bg-white shadow-lg hover:shadow-xl rounded-md overflow-hidden">
       <a href={props.href} class="block">
         <div class="relative flex justify-center items-center">
           <img

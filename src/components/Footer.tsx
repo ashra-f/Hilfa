@@ -4,14 +4,14 @@ import type { Component } from "solid-js"
 const Footer: Component = () => {
   return (
     <footer class="bg-black text-white py-8">
-      <div class="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0">
+      <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
         {/* Centered Logo or Text */}
-        <div class="order-1 text-center lg:order-2">
+        <div class="order-1 text-center md:order-2">
           <span class="font-ballet text-3xl">hilfastudios</span>
         </div>
 
         {/* Navigation Links */}
-        <div class="order-2 flex space-x-4 lg:order-1">
+        <div class="order-2 flex space-x-4 md:order-1">
           <a href="/" class="hover:text-gray-400">
             Home
           </a>
@@ -24,7 +24,7 @@ const Footer: Component = () => {
         </div>
 
         {/* Social Media Icons */}
-        <div class="order-3 flex space-x-4 lg:order-3">
+        <div class="order-3 flex space-x-4 md:order-3">
           <For each={socialMediaLinks}>
             {(social) => (
               <a

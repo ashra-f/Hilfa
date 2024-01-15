@@ -38,7 +38,7 @@ const products = json.data.products;
 <Layout title="Hilfa">
   <main class="flex flex-col justify-between">
     <div class="flex-grow">
-      <ul role="list" class="flex flex-col space-y-4 lg:flex-row lg:space-y-0 lg:space-x-20 lg:justify-center lg:items-stretch p-4">
+      <ul role="list" class="flex flex-wrap justify-center gap-4 p-4">
         {products.map((product: any) => (
           <ProductCard
             image={product.images[0].url}
