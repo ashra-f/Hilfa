@@ -6,7 +6,17 @@ import compress from "astro-compress"
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [solidJs(), tailwind(), compress()],
+  integrations: [
+    solidJs(),
+    tailwind(),
+    compress({
+      JavaScript: true,
+      CSS: true,
+      HTML: true,
+      Image: true,
+      SVG: true,
+    }),
+  ],
   output: "server",
   adapter: vercel(),
 })

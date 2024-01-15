@@ -32,6 +32,7 @@ const Footer: Component = () => {
                 class="hover:text-gray-400"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={social.name}
               >
                 <svg
                   class="fill-current h-6 w-6"

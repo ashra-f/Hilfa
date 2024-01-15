@@ -11,8 +11,8 @@ interface Props {
 
 const ProductCard: Component<Props> = (props) => {
   return (
-    <a href={props.href} class="block">
-      <li class="max-w-xs mx-auto bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl">
+    <li class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl mx-0">
+      <a href={props.href} class="block">
         <div class="relative flex justify-center items-center">
           <img
             src={props.image}
@@ -25,8 +25,8 @@ const ProductCard: Component<Props> = (props) => {
           <p class="mt-2 text-gray-600 text-sm">{props.body}</p>
           <p class="mt-2 text-gray-900 font-bold text-xl">${props.price}</p>
         </div>
-      </li>
-    </a>
+      </a>
+    </li>
   )
 }
 

@@ -82,7 +82,7 @@ if (Astro.request.method === "POST") {
       </div>
       <!-- Smaller Images Row for Smaller Screens, Column for Larger Screens -->
       <div class="flex md:flex-col justify-center md:mr-4">
-        {product.images.map((image: { url: string | null | undefined; }, index: number) => (
+        {product.images.map((image: { url: string | null | undefined; }) => (
           <img 
             src={image.url} 
             alt={product.name} 
